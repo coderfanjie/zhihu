@@ -1,11 +1,4 @@
 <?php
-/**
- * https://gitee.com/Mao02
- * http://www.dazhetu.cn/
- * jay_fun 410136330@qq.com
- * Date: 2019/1/27
- * Time: 11:16
- */
 
 namespace app;
 
@@ -13,26 +6,52 @@ use Server\CoreBase\HttpInput;
 use Server\CoreBase\Loader;
 use Server\SwooleDistributedServer;
 
+/**
+ * Created by PhpStorm.
+ * User: zhangjincheng
+ * Date: 16-9-19
+ * Time: 下午2:36
+ */
 class AppServer extends SwooleDistributedServer
 {
+    /**
+     * 可以在这里自定义Loader，但必须是ILoader接口
+     * AppServer constructor.
+     */
     public function __construct()
     {
         $this->setLoader(new Loader());
         parent::__construct();
     }
 
-    public function getEventControllerName()
+    /**
+     * 开服初始化(支持协程)
+     * @return mixed
+     */
+    public function onOpenServiceInitialization()
     {
-        return 'AppController';
+        parent::onOpenServiceInitialization();
     }
 
-    public function getConnectMethodName(){
-        return 'onConnect';
+    /**
+     * 这里可以进行额外的异步连接池，比如另一组redis/mysql连接
+     * @param $workerId
+     * @return void
+     * @throws \Server\CoreBase\SwooleException
+     * @throws \Exception
+     */
+    public function initAsynPools($workerId)
+    {
+        parent::initAsynPools($workerId);
     }
 
-    public function getCloseMethodName()
+    /**
+     * 用户进程
+     * @throws \Exception
+     */
+    public function startProcess()
     {
-        return 'onClose';
+        parent::startProcess();
     }
 
     /**
@@ -46,11 +65,27 @@ class AppServer extends SwooleDistributedServer
     }
 
     /**
-     * 开服初始化(支持协程)
-     * @return mixed
+     * @return string
      */
-    public function onOpenServiceInitialization()
+    public function getCloseMethodName()
     {
-        parent::onOpenServiceInitialization();
+        return 'onClose';
     }
+
+    /**
+     * @return string
+     */
+    public function getEventControllerName()
+    {
+        return 'AppController';
+    }
+
+    /**
+     * @return string
+     */
+    public function getConnectMethodName()
+    {
+        return 'onConnect';
+    }
+
 }

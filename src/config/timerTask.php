@@ -1,12 +1,10 @@
 <?php
 /**
- * https://gitee.com/Mao02
- * http://www.dazhetu.cn/
- * jay_fun 410136330@qq.com
- * Date: 2019/1/27
- * Time: 11:10
+ * Created by PhpStorm.
+ * User: zhangjincheng
+ * Date: 16-7-14
+ * Time: 下午1:58
  */
-
 /**
  * timerTask定时任务
  * （选填）task名称 task_name
@@ -20,8 +18,8 @@
 $config['timerTask'] = [];
 //下面例子表示在每天的14点到20点间每隔1秒执行一次
 /*$config['timerTask'][] = [
-    'start_time' => 'Y-m-d 19:00:00',
-    'end_time' => 'Y-m-d 20:00:00',
+    //'start_time' => 'Y-m-d 19:00:00',
+    //'end_time' => 'Y-m-d 20:00:00',
     'task_name' => 'TestTask',
     'method_name' => 'test',
     'interval_time' => '1',
